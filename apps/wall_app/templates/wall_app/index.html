@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'wall_app/css/style.css'%}">
+    <title>Document</title>
+</head>
+
+<body class="container-fluid">
+    <div class="container">
+        <div class="row header">
+            <nav class="navbar navbar-expand-lg navbar-light" style="background-color: lime;">
+                <a class="navbar-brand" href="#">THE WALL</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Profile</a>
+                        </li>
+                        <li class="nav-item welcome">
+                            <p class="nav-link username">Welcome, {{logged_in.first_name}}!</p>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="/log_out">Log Out</a></li>
+                    </ul>
+                    <form class="form-inline my-2 my-lg-0">
+                        {% csrf_token %}
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+        </div><!--Header end-->
+        <div class="row">
+            <div class="col">
+                <form action="post_message" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                <label for="exampleInputEmail1">Post a message</label>
+                <textarea class="form-control" name="message" id="exampleFormControlTextarea1" rows="3" placeholder="Enter a message"></textarea>
+                <div class="row justify-content-end post"><button class="btn btn-outline-success my-2 my-sm-0" type="submit">Post!</button></div>
+                </div>
+                </form>
+                <div class="">
+                    {% for post in messages_posted %}
+                    <div class="message_wall"><span><b>{{ post.messager.first_name }}</b></span> Message # {{ post.id }} {{ post.created_at }}<br>
+                    {{post.message_in_messages}} <br>
+                    {% if request.session.user_id == post.messager.id %}
+                    <a class="like" href="delete_message/{{post.id}}">Delete Post</a>
+                    {% endif %}
+                    <div class="like">{{ post.likes_on_message.all | length }}</div>
+                    <a class="like" href="message/like/{{post.id}}">Like!</a>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="col-10 comment">
+                            {% for reply in comments_posted %}
+                            {% if reply.message_in_comments.id == post.id %}
+                            <div class="comment_wall"><span><b>{{reply.commenter.first_name}}</b></span> {{ reply.created_at }}<br>
+                            {{reply.comment}} <br>
+                            {% if request.session.user_id == reply.commenter.id %}
+                            <a href="delete_comment/{{reply.id}}">Delete Comment</a>
+                            {% endif %}
+                            <div class="like">{{ reply.likes_on_comment.all | length }}</div>
+                            <a class="like" href="comment/like/{{reply.id}}">Like!</a>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+
+                            <form action="add_comment/{{post.id}}" method="POST">
+                            {% csrf_token %}
+                            <div class="input-group mb-3">
+                                <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="1" placeholder="Post a comment" ></textarea>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-success" type="submit" id="button-addon2">Post!</button>
+                                </div>
+                            </div>
+                            </form><br>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

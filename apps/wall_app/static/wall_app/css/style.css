@@ -1,0 +1,71 @@
+/* wall_app styles */
+
+* {
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+body {
+    background-color: rgb(44, 44, 44);
+}
+
+.container {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.137);
+    color: white;
+}
+
+h1 {
+    text-align: center;
+}
+
+.navbar {
+    width: 100%
+}
+
+h2 {
+    width: 100%;
+}
+
+.welcome {
+    color: black;
+}
+
+p {
+    margin: 0;
+}
+
+.username {
+    margin: 0px;
+}
+
+.post {
+    margin: 3px 0px;
+}
+
+.yay {
+    color: white;
+}
+
+.message_wall {
+    border: 1px solid lime;
+    padding: 5px;
+}
+
+.comment_wall {
+    border: 1px solid aqua;
+    padding: 5px;
+}
+
+span {
+    color: hotpink;
+}
+
+.comment {
+    width: 70%;
+}
+
+.like {
+    display: inline-block;
+    margin-left: 2%;
+}

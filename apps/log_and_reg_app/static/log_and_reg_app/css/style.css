@@ -1,0 +1,30 @@
+* {
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+body {
+    background-color: black;
+}
+
+.container {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.137);
+    color: white;
+}
+
+h1 {
+    text-align: center;
+}
+
+p, .red {
+    color: red;
+}
+
+p, .green {
+    color: lime;
+}
+
+.navbar {
+    width: 100%;
+}
