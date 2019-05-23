@@ -14,6 +14,7 @@
 
 <body class="container-fluid">
     <div class="container">
+        {{logged_in}}
         <div class="row header">
             <nav class="navbar navbar-expand-lg navbar-light" style="background-color: lime;">
                 <a class="navbar-brand" href="#">THE WALL</a>
@@ -62,7 +63,11 @@
                     <a class="like" href="delete_message/{{post.id}}">Delete Post</a>
                     {% endif %}
                     <div class="like">{{ post.likes_on_message.all | length }}</div>
+                    {% if logged_in not in post.likes_on_message.all %}
                     <a class="like" href="message/like/{{post.id}}">Like!</a>
+                    {% else %}
+                    <a class="like" href="message/unlike/{{post.id}}">Unlike!</a>
+                    {% endif %}
                     </div>
 
                     <div class="row justify-content-center">
@@ -75,8 +80,12 @@
                             <a href="delete_comment/{{reply.id}}">Delete Comment</a>
                             {% endif %}
                             <div class="like">{{ reply.likes_on_comment.all | length }}</div>
+                            {% if logged_in not in reply.likes_on_comment.all %}
                             <a class="like" href="comment/like/{{reply.id}}">Like!</a>
-                            </div>
+                            {% else %}
+                            <a class="like" href="comment/unlike/{{reply.id}}">Unlike!</a>
+                            {% endif %}
+                            </div><!--comment_wall end-->
                             {% endif %}
                             {% endfor %}
 

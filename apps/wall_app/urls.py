@@ -11,4 +11,6 @@ urlpatterns = [
     url(r'^delete_comment/(?P<id>\d+)$', views.delete_comment), #wall/delete_comment/id
     url(r'^message/like/(?P<id>\d+)$', views.message_like), #wall/message/like/id
     url(r'^comment/like/(?P<id>\d+)$', views.comment_like), #wall/comment/like/id
+    url(r'^message/unlike/(?P<id>\d+)$', views.message_unlike), #wall/message/unlike/id
+    url(r'^comment/unlike/(?P<id>\d+)$', views.comment_unlike), #wall/comment/unlike/id
 ]

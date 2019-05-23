@@ -47,3 +47,17 @@ def comment_like(request, id):
     comment_to_like.likes_on_comment.add(user_that_is_liking)
     comment_to_like.save()
     return redirect("/wall")
+
+def message_unlike(request, id):
+    user_that_is_unliking = Users.objects.get(id = request.session['user_id'])
+    message_to_unlike = Messages.objects.get(id = id)
+    message_to_unlike.likes_on_message.remove(user_that_is_unliking)
+    message_to_unlike.save()
+    return redirect("/wall")
+
+def comment_unlike(request, id):
+    user_that_is_unliking = Users.objects.get(id = request.session['user_id'])
+    comment_to_unlike = Comments.objects.get(id = id)
+    comment_to_unlike.likes_on_comment.remove(user_that_is_unliking)
+    comment_to_unlike.save()
+    return redirect("/wall")
